@@ -1,9 +1,9 @@
 #ifndef BRONZESTYLE_H
 #define BRONZESTYLE_H
 
-#include <QWindowsStyle>
+#include <QCommonStyle>
 
-class BronzeStyle : public QWindowsStyle
+class BronzeStyle : public QCommonStyle
 {
     Q_OBJECT
 

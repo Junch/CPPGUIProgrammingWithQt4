@@ -1,5 +1,6 @@
-#include <QtGui>
-#include <QtScript>
+#include <QtWidgets>
+#include <QJSEngine>
+#include <QJSValueIterator>
 #include <iostream>
 
 #include "pumpspreadsheet.h"
@@ -23,40 +24,35 @@ bool runScript(const QString &fileName, const QStringList &args)
     QString script = in.readAll();
     file.close();
 
-    QScriptEngine interpreter;
+    QJSEngine interpreter;
 
     PumpSpreadsheet spreadsheet;
-    QScriptValue qsSpreadsheet = interpreter.newQObject(&spreadsheet);
+    QJSValue qsSpreadsheet = interpreter.newQObject(&spreadsheet);
     interpreter.globalObject().setProperty("spreadsheet",
                                            qsSpreadsheet);
 
-    QScriptValue qsArgs = qScriptValueFromSequence(&interpreter, args);
+    // Convert args to JS array
+    QJSValue qsArgs = interpreter.newArray(args.length());
+    for (int i = 0; i < args.length(); ++i) {
+        qsArgs.setProperty(i, args.at(i));
+    }
     interpreter.globalObject().setProperty("args", qsArgs);
 
-    QScriptValue qsMetaObject =
-            interpreter.newQMetaObject(spreadsheet.metaObject());
+    QJSValue qsMetaObject =
+            interpreter.newQMetaObject(&PumpSpreadsheet::staticMetaObject);
     interpreter.globalObject().setProperty("PumpSpreadsheet",
                                            qsMetaObject);
 
-    PumpFilterPrototype filterProto;
-    QScriptValue qsFilterProto = interpreter.newQObject(&filterProto);
-    interpreter.setDefaultPrototype(qMetaTypeId<PumpFilter>(),
-                                    qsFilterProto);
+    // Create PumpFilter constructor wrapper
+    QString filterConstructorCode = 
+        "var PumpFilter = function() { return { fromDate: new Date(), toDate: new Date() }; };";
+    interpreter.evaluate(filterConstructorCode);
 
-    QScriptValue qsFilterCtor =
-            interpreter.newFunction(pumpFilterConstructor,
-                                    qsFilterProto);
-    interpreter.globalObject().setProperty("PumpFilter", qsFilterCtor);
-
-    interpreter.evaluate(script);
-    if (interpreter.hasUncaughtException()) {
+    QJSValue result = interpreter.evaluate(script);
+    if (result.isError()) {
         std::cerr << "Uncaught exception at line "
-                  << interpreter.uncaughtExceptionLineNumber() << ": "
-                  << qPrintable(interpreter.uncaughtException()
-                                           .toString())
-                  << std::endl << "Backtrace: "
-                  << qPrintable(interpreter.uncaughtExceptionBacktrace()
-                                           .join(", "))
+                  << result.property("lineNumber").toInt() << ": "
+                  << qPrintable(result.toString())
                   << std::endl;
         return false;
     }
@@ -64,14 +60,13 @@ bool runScript(const QString &fileName, const QStringList &args)
     return true;
 }
 
-QScriptValue pumpFilterConstructor(QScriptContext * /* context */,
-                                   QScriptEngine *interpreter)
+QJSValue pumpFilterConstructor(const QJSValue &value)
 {
-    return interpreter->toScriptValue(PumpFilter());
+    return value;
 }
 
 PumpFilterPrototype::PumpFilterPrototype(QObject *parent)
-    : QObject(parent)
+    : QObject(parent), m_filter(nullptr)
 {
 }
 
@@ -177,5 +172,5 @@ QString PumpFilterPrototype::status() const
 
 PumpFilter *PumpFilterPrototype::wrappedFilter() const
 {
-    return qscriptvalue_cast<PumpFilter *>(thisObject());
+    return m_filter;
 }

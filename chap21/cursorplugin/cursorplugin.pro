@@ -1,4 +1,5 @@
 TEMPLATE      = lib
+QT           += widgets
 CONFIG       += plugin
 HEADERS       = cursorhandler.h \
                 cursorplugin.h

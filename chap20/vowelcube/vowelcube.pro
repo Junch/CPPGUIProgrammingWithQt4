@@ -1,5 +1,5 @@
 TEMPLATE      = app
-QT           += opengl
+QT           += widgets opengl
 CONFIG       += console
 HEADERS       = vowelcube.h
 SOURCES       = main.cpp \

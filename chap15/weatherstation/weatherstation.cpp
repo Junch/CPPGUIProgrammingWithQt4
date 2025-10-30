@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 #include <QtNetwork>
 
 #include "weatherstation.h"

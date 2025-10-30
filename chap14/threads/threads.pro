@@ -1,4 +1,5 @@
 TEMPLATE      = app
+QT           += widgets
 CONFIG       += console thread
 HEADERS       = thread.h \
                 threaddialog.h

@@ -9,6 +9,10 @@
 *.so
 *.dll
 *.dylib
+*.app
+*.DS_Store
+*.stash
+
 
 # Qt-es
 
@@ -24,6 +28,8 @@ qrc_*.cpp
 ui_*.h
 Makefile*
 *build-*
+build/
+_build/
 
 # QtCreator
 

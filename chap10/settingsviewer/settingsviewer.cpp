@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 
 #include "settingsviewer.h"
 
@@ -12,8 +12,8 @@ SettingsViewer::SettingsViewer(QWidget *parent)
     treeWidget->setColumnCount(2);
     treeWidget->setHeaderLabels(
             QStringList() << tr("Key") << tr("Value"));
-    treeWidget->header()->setResizeMode(0, QHeaderView::Stretch);
-    treeWidget->header()->setResizeMode(1, QHeaderView::Stretch);
+    treeWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+    treeWidget->header()->setSectionResizeMode(1, QHeaderView::Stretch);
 
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Open
                                      | QDialogButtonBox::Close);
@@ -75,7 +75,7 @@ void SettingsViewer::readSettings()
     treeWidget->clear();
     addChildSettings(settings, 0, "");
 
-    treeWidget->sortByColumn(0);
+    treeWidget->sortByColumn(0, Qt::AscendingOrder);
     treeWidget->setFocus();
     setWindowTitle(tr("Settings Viewer - %1 by %2")
                    .arg(application).arg(organization));

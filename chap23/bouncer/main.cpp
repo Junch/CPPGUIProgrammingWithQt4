@@ -1,3 +1,4 @@
+#ifdef Q_OS_WIN
 #include <QAxFactory>
 
 #include "axbouncer.h"
@@ -8,3 +9,17 @@ QAXFACTORY_DEFAULT(AxBouncer,
                    "{772c14a5-a840-4023-b79d-19549ece0cd9}",
                    "{dbce1e56-70dd-4f74-85e0-95c65d86254d}",
                    "{3f3db5e0-78ff-4e35-8a5d-3d3b96c83e09}")
+#else
+// On non-Windows platforms, create a standalone application
+#include <QApplication>
+#include "axbouncer.h"
+
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+    AxBouncer bouncer;
+    bouncer.show();
+    bouncer.start();
+    return app.exec();
+}
+#endif

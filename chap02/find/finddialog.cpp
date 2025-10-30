@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 
 #include "finddialog.h"
 
@@ -18,12 +18,20 @@ FindDialog::FindDialog(QWidget *parent)
 
     closeButton = new QPushButton(tr("Close"));
 
-    connect(lineEdit, SIGNAL(textChanged(const QString &)),
-            this, SLOT(enableFindButton(const QString &)));
-    connect(findButton, SIGNAL(clicked()),
-            this, SLOT(findClicked()));
-    connect(closeButton, SIGNAL(clicked()),
-            this, SLOT(close()));
+    // connect(lineEdit, SIGNAL(textChanged(const QString &)),
+    //         this, SLOT(enableFindButton(const QString &)));
+    // connect(findButton, SIGNAL(clicked()),
+    //         this, SLOT(findClicked()));
+    // connect(closeButton, SIGNAL(clicked()),
+    //         this, SLOT(close()));
+
+    // Qt5 style signal-slot connections
+    connect(lineEdit, &QLineEdit::textChanged,
+            this, &FindDialog::enableFindButton);
+    connect(findButton, &QPushButton::clicked,
+            this, &FindDialog::findClicked);
+    connect(closeButton, &QPushButton::clicked,
+            this, &QDialog::close);
 
     QHBoxLayout *topLeftLayout = new QHBoxLayout;
     topLeftLayout->addWidget(label);

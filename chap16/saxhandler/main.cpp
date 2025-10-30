@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 #include <iostream>
 
 #include "saxhandler.h"
@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
     QTreeWidget treeWidget;
     treeWidget.setHeaderLabels(labels);
-    treeWidget.header()->setResizeMode(QHeaderView::Stretch);
+    treeWidget.header()->setSectionResizeMode(QHeaderView::Stretch);
     treeWidget.setWindowTitle(QObject::tr("SAX Handler"));
     treeWidget.show();
 

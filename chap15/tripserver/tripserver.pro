@@ -1,5 +1,5 @@
 TEMPLATE      = app
-QT           += network
+QT           += widgets network
 HEADERS       = clientsocket.h \
                 tripserver.h
 SOURCES       = clientsocket.cpp \

@@ -1,0 +1,24 @@
+# Vowelcube example
+cmake_minimum_required(VERSION 3.16)
+project(vowelcube)
+
+set(CMAKE_AUTOMOC ON)
+
+if(QT_VERSION_MAJOR EQUAL 6)
+    find_package(Qt6 COMPONENTS Widgets OpenGL OpenGLWidgets REQUIRED)
+    set(QT_LIBS Qt6::Widgets Qt6::OpenGL Qt6::OpenGLWidgets)
+else()
+    find_package(Qt5 COMPONENTS Widgets OpenGL REQUIRED)
+    set(QT_LIBS Qt5::Widgets Qt5::OpenGL)
+endif()
+
+# Find OpenGL
+find_package(OpenGL REQUIRED)
+
+add_executable(vowelcube
+    vowelcube.h
+    main.cpp
+    vowelcube.cpp
+)
+
+target_link_libraries(vowelcube ${QT_LIBS} OpenGL::GL)

@@ -1,4 +1,5 @@
 TEMPLATE      = app
+QT           += widgets
 HEADERS       = editor.h \
                 mainwindow.h
 SOURCES       = editor.cpp \

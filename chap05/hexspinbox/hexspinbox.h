@@ -13,9 +13,9 @@ public:
     HexSpinBox(QWidget *parent = 0);
 
 protected:
-    QValidator::State validate(QString &text, int &pos) const;
-    int valueFromText(const QString &text) const;
-    QString textFromValue(int value) const;
+    QValidator::State validate(QString &text, int &pos) const override;
+    int valueFromText(const QString &text) const override;
+    QString textFromValue(int value) const override;
 
 private:
     QRegExpValidator *validator;

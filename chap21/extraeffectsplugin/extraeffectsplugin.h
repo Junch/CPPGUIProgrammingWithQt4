@@ -8,6 +8,7 @@
 class ExtraEffectsPlugin : public QObject, public TextArtInterface
 {
     Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.examples.TextArtInterface")
     Q_INTERFACES(TextArtInterface)
 
 public:

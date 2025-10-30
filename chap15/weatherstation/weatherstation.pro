@@ -1,5 +1,5 @@
 TEMPLATE      = app
-QT           += network
+QT           += widgets network
 HEADERS       = weatherstation.h
 SOURCES       = main.cpp \
                 weatherstation.cpp

@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 
 #include "filterdialog.h"
 #include "pumpwindow.h"

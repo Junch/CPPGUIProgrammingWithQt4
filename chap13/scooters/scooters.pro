@@ -1,5 +1,5 @@
 TEMPLATE      = app
-QT           += sql
+QT           += widgets sql
 HEADERS       = scooterwindow.h
 SOURCES       = main.cpp \
                 scooterwindow.cpp

@@ -1,4 +1,5 @@
 TEMPLATE      = app
+QT           += widgets
 HEADERS       = projectdialog.h \
                 projectlistwidget.h
 SOURCES       = main.cpp \

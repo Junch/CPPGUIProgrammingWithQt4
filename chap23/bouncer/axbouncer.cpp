@@ -1,7 +1,10 @@
-#include <QtGui>
+#include <QtWidgets>
 
 #include "axbouncer.h"
+
+#ifdef Q_OS_WIN
 #include "objectsafetyimpl.h"
+#endif
 
 AxBouncer::AxBouncer(QWidget *parent)
     : QWidget(parent)
@@ -16,15 +19,23 @@ AxBouncer::AxBouncer(QWidget *parent)
 
 void AxBouncer::setColor(const QColor &newColor)
 {
+#ifdef Q_OS_WIN
     if (newColor != ballColor && requestPropertyChange("color")) {
         ballColor = newColor;
         update();
         propertyChanged("color");
     }
+#else
+    if (newColor != ballColor) {
+        ballColor = newColor;
+        update();
+    }
+#endif
 }
 
 void AxBouncer::setSpeed(SpeedValue newSpeed)
 {
+#ifdef Q_OS_WIN
     if (newSpeed != ballSpeed && requestPropertyChange("speed")) {
         ballSpeed = newSpeed;
 
@@ -34,6 +45,16 @@ void AxBouncer::setSpeed(SpeedValue newSpeed)
         }
         propertyChanged("speed");
     }
+#else
+    if (newSpeed != ballSpeed) {
+        ballSpeed = newSpeed;
+
+        if (isRunning()) {
+            killTimer(myTimerId);
+            myTimerId = startTimer(intervalInMilliseconds());
+        }
+    }
+#endif
 }
 
 int AxBouncer::intervalInMilliseconds() const
@@ -50,12 +71,20 @@ int AxBouncer::intervalInMilliseconds() const
 
 void AxBouncer::setRadius(int newRadius)
 {
+#ifdef Q_OS_WIN
     if (newRadius != ballRadius && requestPropertyChange("radius")) {
         ballRadius = newRadius;
         update();
         updateGeometry();
         propertyChanged("radius");
     }
+#else
+    if (newRadius != ballRadius) {
+        ballRadius = newRadius;
+        update();
+        updateGeometry();
+    }
+#endif
 }
 
 QSize AxBouncer::sizeHint() const
@@ -63,26 +92,41 @@ QSize AxBouncer::sizeHint() const
     return QSize(250, 5 * radius());
 }
 
+#ifdef Q_OS_WIN
 QAxAggregated *AxBouncer::createAggregate()
 {
     return new ObjectSafetyImpl;
 }
+#endif
 
 void AxBouncer::start()
 {
+#ifdef Q_OS_WIN
     if (!isRunning() && requestPropertyChange("running")) {
         myTimerId = startTimer(intervalInMilliseconds());
         propertyChanged("running");
     }
+#else
+    if (!isRunning()) {
+        myTimerId = startTimer(intervalInMilliseconds());
+    }
+#endif
 }
 
 void AxBouncer::stop()
 {
+#ifdef Q_OS_WIN
     if (isRunning() && requestPropertyChange("running")) {
         killTimer(myTimerId);
         myTimerId = 0;
         propertyChanged("running");
     }
+#else
+    if (isRunning()) {
+        killTimer(myTimerId);
+        myTimerId = 0;
+    }
+#endif
 }
 
 void AxBouncer::paintEvent(QPaintEvent * /* event */)

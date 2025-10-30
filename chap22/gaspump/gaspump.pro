@@ -1,5 +1,5 @@
 TEMPLATE      = app
-QT           += script xml
+QT           += widgets qml xml
 HEADERS       = filterdialog.h \
                 pumpspreadsheet.h \
                 pumpwindow.h \

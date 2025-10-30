@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 
 #include "cursorhandler.h"
 #include "cursorplugin.h"
@@ -33,5 +33,3 @@ QImageIOHandler *CursorPlugin::create(QIODevice *device,
     handler->setFormat(format);
     return handler;
 }
-
-Q_EXPORT_PLUGIN2(cursorplugin, CursorPlugin)

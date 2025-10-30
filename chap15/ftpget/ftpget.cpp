@@ -7,7 +7,8 @@
 FtpGet::FtpGet(QObject *parent)
     : QObject(parent)
 {
-    connect(&ftp, SIGNAL(done(bool)), this, SLOT(ftpDone(bool)));
+    connect(&manager, SIGNAL(finished(QNetworkReply*)), 
+            this, SLOT(downloadFinished(QNetworkReply*)));
 }
 
 bool FtpGet::getFile(const QUrl &url)
@@ -39,22 +40,33 @@ bool FtpGet::getFile(const QUrl &url)
         return false;
     }
 
-    ftp.connectToHost(url.host(), url.port(21));
-    ftp.login();
-    ftp.get(url.path(), &file);
-    ftp.close();
+    QNetworkRequest request(url);
+    QNetworkReply *reply = manager.get(request);
+    connect(reply, SIGNAL(downloadProgress(qint64, qint64)),
+            this, SLOT(downloadProgress(qint64, qint64)));
+    
     return true;
 }
 
-void FtpGet::ftpDone(bool error)
+void FtpGet::downloadFinished(QNetworkReply *reply)
 {
-    if (error) {
-        std::cerr << "Error: " << qPrintable(ftp.errorString())
+    if (reply->error() != QNetworkReply::NoError) {
+        std::cerr << "Error: " << qPrintable(reply->errorString())
                   << std::endl;
     } else {
+        file.write(reply->readAll());
         std::cerr << "File downloaded as "
                   << qPrintable(file.fileName()) << std::endl;
     }
     file.close();
+    reply->deleteLater();
     emit done();
+}
+
+void FtpGet::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
+{
+    if (bytesTotal > 0) {
+        std::cerr << "Downloaded " << bytesReceived << " of " 
+                  << bytesTotal << " bytes\r" << std::flush;
+    }
 }

@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 
 #include "extraeffectsplugin.h"
 
@@ -13,7 +13,7 @@ QPixmap ExtraEffectsPlugin::applyEffect(const QString &effect,
 {
     QFont myFont = font;
     QFontMetrics metrics(myFont);
-    while ((metrics.width(text) > size.width()
+    while ((metrics.horizontalAdvance(text) > size.width()
             || metrics.height() > size.height())
            && myFont.pointSize() > 9) {
         myFont.setPointSize(myFont.pointSize() - 1);
@@ -32,7 +32,7 @@ QPixmap ExtraEffectsPlugin::applyEffect(const QString &effect,
     painter.eraseRect(pixmap.rect());
 
     int middle = text.length() / 2;
-    qreal x = (size.width() - metrics.width(text)) / 2;
+    qreal x = (size.width() - metrics.horizontalAdvance(text)) / 2;
     qreal stepSize = ((myFont.pointSizeF() / 2) / middle) + 1;
 
     if (effect == "BigEnds") {
@@ -50,7 +50,7 @@ QPixmap ExtraEffectsPlugin::applyEffect(const QString &effect,
         qreal y = size.height() - metrics.descent()
                   - ((size.height() - metrics.height()) / 2);
         path.addText(x, y, myFont, str);
-        x += metrics.width(str) + 1;
+        x += metrics.horizontalAdvance(str) + 1;
         if (i == middle)
             stepSize = -stepSize;
     }
@@ -59,4 +59,4 @@ QPixmap ExtraEffectsPlugin::applyEffect(const QString &effect,
     return pixmap;
 }
 
-Q_EXPORT_PLUGIN2(extraeffectsplugin, ExtraEffectsPlugin)
+

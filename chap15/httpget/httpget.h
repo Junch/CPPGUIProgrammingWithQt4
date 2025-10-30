@@ -1,8 +1,10 @@
 #ifndef HTTPGET_H
 #define HTTPGET_H
 
+#include <QObject>
 #include <QFile>
-#include <QHttp>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 
 class QUrl;
 
@@ -19,10 +21,11 @@ signals:
     void done();
 
 private slots:
-    void httpDone(bool error);
+    void downloadFinished(QNetworkReply *reply);
+    void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
 
 private:
-    QHttp http;
+    QNetworkAccessManager manager;
     QFile file;
 };
 

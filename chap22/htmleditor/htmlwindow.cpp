@@ -1,14 +1,11 @@
-#include <QtGui>
+#include <QtWidgets>
 #include <QtUiTools>
 
 #include "htmlsyntaxhighlighter.h"
 #include "htmlwindow.h"
 
-Q_DECLARE_METATYPE(QScriptValue)
-
 HtmlWindow::HtmlWindow()
 {
-    interpreter.setProcessEventsInterval(100);
 
     textEdit = new QTextEdit;
     textEdit->setLineWrapMode(QTextEdit::NoWrap);
@@ -84,8 +81,8 @@ bool HtmlWindow::saveAs()
 void HtmlWindow::scriptActionTriggered()
 {
     QAction *action = qobject_cast<QAction *>(sender());
-    QScriptValue qsScript = action->data().value<QScriptValue>();
-    qsScript.property("run").call(qsScript);
+    QJSValue qsScript = action->data().value<QJSValue>();
+    qsScript.property("run").call();
 }
 
 void HtmlWindow::about()
@@ -307,8 +304,8 @@ bool HtmlWindow::createScriptAction(const QString &jsFileName)
     QString script = in.readAll();
     jsFile.close();
 
-    QScriptValue qsScript = interpreter.evaluate(script);
-    if (interpreter.hasUncaughtException()) {
+    QJSValue qsScript = interpreter.evaluate(script);
+    if (qsScript.isError()) {
         QMessageBox messageBox(this);
         messageBox.setIcon(QMessageBox::Warning);
         messageBox.setWindowTitle(tr("HTML Editor"));
@@ -316,10 +313,9 @@ bool HtmlWindow::createScriptAction(const QString &jsFileName)
                               "script %1.")
                            .arg(strippedName(jsFileName)));
         messageBox.setInformativeText(
-                tr("%1.").arg(interpreter.uncaughtException()
-                              .toString()));
+                tr("%1.").arg(qsScript.toString()));
         messageBox.setDetailedText(
-                interpreter.uncaughtExceptionBacktrace().join("\n"));
+                tr("Line %1").arg(qsScript.property("lineNumber").toString()));
         messageBox.exec();
         return false;
     }
@@ -347,11 +343,11 @@ bool HtmlWindow::createScriptAction(const QString &jsFileName)
         return false;
     }
 
-    QScriptValue qsDialog = interpreter.newQObject(dialog);
-    qsScript.setProperty("dialog", qsDialog);
+    QJSValue qsDialog = interpreter.newQObject(dialog);
+    interpreter.globalObject().setProperty("dialog", qsDialog);
 
-    QScriptValue qsTextEdit = interpreter.newQObject(textEdit);
-    qsScript.setProperty("textEdit", qsTextEdit);
+    QJSValue qsTextEdit = interpreter.newQObject(textEdit);
+    interpreter.globalObject().setProperty("textEdit", qsTextEdit);
 
     QAction *action = new QAction(this);
     action->setText(qsScript.property("text").toString());

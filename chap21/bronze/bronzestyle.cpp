@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 
 #include "bronzestyle.h"
 
@@ -48,7 +48,7 @@ int BronzeStyle::styleHint(StyleHint which, const QStyleOption *option,
     case SH_UnderlineShortcut:
         return int(false);
     default:
-        return QWindowsStyle::styleHint(which, option, widget,
+        return QCommonStyle::styleHint(which, option, widget,
                                         returnData);
     }
 }
@@ -68,7 +68,7 @@ int BronzeStyle::pixelMetric(PixelMetric which,
     case PM_DefaultFrameWidth:
         return 2;
     default:
-        return QWindowsStyle::pixelMetric(which, option, widget);
+        return QCommonStyle::pixelMetric(which, option, widget);
     }
 }
 
@@ -90,7 +90,7 @@ void BronzeStyle::drawPrimitive(PrimitiveElement which,
     case PE_FrameDefaultButton:
         break;
     default:
-        QWindowsStyle::drawPrimitive(which, option, painter, widget);
+        QCommonStyle::drawPrimitive(which, option, painter, widget);
     }
 }
 
@@ -110,7 +110,7 @@ void BronzeStyle::drawComplexControl(ComplexControl which,
         painter->drawLine(rect.topLeft(), rect.bottomLeft());
         painter->drawLine(rect.topRight(), rect.bottomRight());
     } else {
-        return QWindowsStyle::drawComplexControl(which, option, painter,
+        return QCommonStyle::drawComplexControl(which, option, painter,
                                                  widget);
     }
 }
@@ -146,7 +146,7 @@ QRect BronzeStyle::subControlRect(ComplexControl whichControl,
             return QRect();
         }
     } else {
-        return QWindowsStyle::subControlRect(whichControl, option,
+        return QCommonStyle::subControlRect(whichControl, option,
                                              whichSubControl, widget);
     }
 }
@@ -154,7 +154,7 @@ QRect BronzeStyle::subControlRect(ComplexControl whichControl,
 QIcon BronzeStyle::standardIconImplementation(StandardPixmap which,
         const QStyleOption *option, const QWidget *widget) const
 {
-    QImage image = QWindowsStyle::standardPixmap(which, option, widget)
+    QImage image = QCommonStyle::standardPixmap(which, option, widget)
                    .toImage();
     if (image.isNull())
         return QIcon();

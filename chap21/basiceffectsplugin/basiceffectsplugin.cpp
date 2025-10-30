@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 
 #include "basiceffectsplugin.h"
 
@@ -13,7 +13,7 @@ QPixmap BasicEffectsPlugin::applyEffect(const QString &effect,
 {
     QFont myFont = font;
     QFontMetrics metrics(myFont);
-    while ((metrics.width(text) > size.width()
+    while ((metrics.horizontalAdvance(text) > size.width()
             || metrics.height() > size.height())
            && myFont.pointSize() > 9) {
         myFont.setPointSize(myFont.pointSize() - 1);
@@ -40,7 +40,7 @@ QPixmap BasicEffectsPlugin::applyEffect(const QString &effect,
     } else if (effect == "Shadow") {
         QPainterPath path;
         painter.setBrush(Qt::darkGray);
-        path.addText(((size.width() - metrics.width(text)) / 2) + 3,
+        path.addText(((size.width() - metrics.horizontalAdvance(text)) / 2) + 3,
                      (size.height() - metrics.descent()) + 3, myFont,
                      text);
         painter.drawPath(path);
@@ -48,11 +48,9 @@ QPixmap BasicEffectsPlugin::applyEffect(const QString &effect,
     }
 
     QPainterPath path;
-    path.addText((size.width() - metrics.width(text)) / 2,
+    path.addText((size.width() - metrics.horizontalAdvance(text)) / 2,
                  size.height() - metrics.descent(), myFont, text);
     painter.drawPath(path);
 
     return pixmap;
 }
-
-Q_EXPORT_PLUGIN2(basiceffectsplugin, BasicEffectsPlugin)

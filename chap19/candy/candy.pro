@@ -1,4 +1,5 @@
 TEMPLATE      = app
+QT           += widgets
 HEADERS       = candydialog.h
 SOURCES       = candydialog.cpp \
                 main.cpp

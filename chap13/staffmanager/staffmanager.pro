@@ -1,5 +1,5 @@
 TEMPLATE      = app
-QT           += sql
+QT           += widgets sql
 HEADERS       = employeeform.h \
                 mainform.h
 SOURCES       = employeeform.cpp \

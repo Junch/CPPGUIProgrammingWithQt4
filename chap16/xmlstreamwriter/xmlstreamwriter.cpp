@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 #include <QtXml>
 #include <iostream>
 
@@ -8,7 +8,7 @@ void populateTree(QTreeWidget *treeWidget)
     labels << QObject::tr("Terms") << QObject::tr("Pages");
 
     treeWidget->setHeaderLabels(labels);
-    treeWidget->header()->setResizeMode(QHeaderView::Stretch);
+    treeWidget->header()->setSectionResizeMode(QHeaderView::Stretch);
     treeWidget->setWindowTitle(QObject::tr("XML Stream Writer"));
     treeWidget->show();
 

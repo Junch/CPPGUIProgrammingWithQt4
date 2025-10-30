@@ -1,0 +1,4 @@
+2025-10-28 11:43:27,261 - aqt.metadata - DEBUG - metadata 8633213248 Connection to 'https://download.qt.io' failed. Retrying with fallback 'https://ftp.fau.de/qtproject/'.
+2025-10-28 11:43:51,406 - aqt.main - ERROR - installer 8633213248 Failure to connect to https://ftp.fau.de/qtproject/online/qtsdkrepository/windows_x86/desktop/: ConnectionError
+2025-10-28 11:44:21,373 - aqt.metadata - DEBUG - metadata 8633213248 Connection to 'https://download.qt.io' failed. Retrying with fallback 'https://qtproject.mirror.liquidtelecom.com/'.
+2025-10-28 11:44:42,223 - aqt.main - ERROR - installer 8633213248 Failure to connect to https://qtproject.mirror.liquidtelecom.com/online/qtsdkrepository/windows_x86/desktop/: ConnectionError

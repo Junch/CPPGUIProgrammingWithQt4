@@ -9,10 +9,11 @@ CityModel::CityModel(QObject *parent)
 
 void CityModel::setCities(const QStringList &cityNames)
 {
+    beginResetModel();
     cities = cityNames;
     distances.resize(cities.count() * (cities.count() - 1) / 2);
     distances.fill(0);
-    reset();
+    endResetModel();
 }
 
 int CityModel::rowCount(const QModelIndex & /* parent */) const

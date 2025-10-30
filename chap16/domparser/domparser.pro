@@ -1,5 +1,5 @@
 TEMPLATE      = app
-QT           += xml
+QT           += widgets xml
 CONFIG       += console
 HEADERS       = domparser.h
 SOURCES       = domparser.cpp \

@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 
 #include "trackdelegate.h"
 #include "trackeditor.h"

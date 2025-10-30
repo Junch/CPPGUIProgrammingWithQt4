@@ -1,6 +1,5 @@
 TEMPLATE      = app
-QT           += script
-CONFIG       += uitools
+QT           += widgets qml uitools
 HEADERS       = htmlsyntaxhighlighter.h \
                 htmlwindow.h
 SOURCES       = htmlsyntaxhighlighter.cpp \

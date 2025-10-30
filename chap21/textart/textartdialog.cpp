@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 
 #include "textartdialog.h"
 #include "textartinterface.h"

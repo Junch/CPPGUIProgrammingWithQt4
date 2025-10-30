@@ -1,0 +1,11 @@
+# Chapter 10 Examples
+add_subdirectory(booleanparser)
+add_subdirectory(cities)
+add_subdirectory(colornames)
+add_subdirectory(coordinatesetter)
+add_subdirectory(currencies)
+add_subdirectory(directoryviewer)
+add_subdirectory(flowchartsymbolpicker)
+add_subdirectory(settingsviewer)
+add_subdirectory(teamleaders)
+add_subdirectory(trackeditor)

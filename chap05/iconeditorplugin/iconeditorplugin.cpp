@@ -49,5 +49,3 @@ QWidget *IconEditorPlugin::createWidget(QWidget *parent)
 {
     return new IconEditor(parent);
 }
-
-Q_EXPORT_PLUGIN2(iconeditorplugin, IconEditorPlugin)

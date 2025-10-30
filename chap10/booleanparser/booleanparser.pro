@@ -1,4 +1,5 @@
 TEMPLATE      = app
+QT           += widgets
 HEADERS       = booleanmodel.h \
                 booleanparser.h \
                 booleanwindow.h \

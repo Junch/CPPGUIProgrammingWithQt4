@@ -1,5 +1,5 @@
-#include <QtGui>
-#include <QtScript>
+#include <QtWidgets>
+#include <QJSEngine>
 #include <cmath>
 
 #include "calculator.h"
@@ -276,10 +276,10 @@ void Calculator::customButtonClicked()
     QString script = in.readAll();
     file.close();
 
-    QScriptEngine interpreter;
-    QScriptValue operand(&interpreter, display->text().toDouble());
+    QJSEngine interpreter;
+    QJSValue operand = interpreter.toScriptValue(display->text().toDouble());
     interpreter.globalObject().setProperty("x", operand);
-    QScriptValue result = interpreter.evaluate(script);
+    QJSValue result = interpreter.evaluate(script);
     if (!result.isNumber()) {
         abortOperation();
         return;

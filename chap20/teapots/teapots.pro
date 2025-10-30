@@ -1,5 +1,5 @@
 TEMPLATE      = app
-QT           += opengl
+QT           += widgets opengl
 CONFIG       += console
 HEADERS       = teapots.h
 SOURCES       = main.cpp \

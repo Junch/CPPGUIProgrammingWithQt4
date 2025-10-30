@@ -1,4 +1,5 @@
 TEMPLATE      = app
+QT           += widgets
 CONFIG       += exceptions
 HEADERS       = oventimer.h
 SOURCES       = main.cpp \

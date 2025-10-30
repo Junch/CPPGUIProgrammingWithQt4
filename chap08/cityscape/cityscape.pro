@@ -1,4 +1,5 @@
 TEMPLATE      = app
+QT           += widgets
 HEADERS       = annotation.h \
                 cityblock.h \
                 cityscape.h \

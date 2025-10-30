@@ -1,5 +1,5 @@
 TEMPLATE      = app
-QT           += script
+QT           += widgets qml
 HEADERS       = calculator.h
 SOURCES       = calculator.cpp \
                 main.cpp

@@ -1,7 +1,9 @@
 #ifndef SPIDER_H
 #define SPIDER_H
 
-#include <QFtp>
+#include <QObject>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include <QStringList>
 
 class QFile;
@@ -19,13 +21,12 @@ signals:
     void done();
 
 private slots:
-    void ftpDone(bool error);
-    void ftpListInfo(const QUrlInfo &urlInfo);
+    void replyFinished(QNetworkReply *reply);
 
 private:
     void processNextDirectory();
 
-    QFtp ftp;
+    QNetworkAccessManager manager;
     QList<QFile *> openedFiles;
     QString currentDir;
     QString currentLocalDir;

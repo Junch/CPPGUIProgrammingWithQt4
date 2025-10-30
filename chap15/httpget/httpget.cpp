@@ -7,7 +7,8 @@
 HttpGet::HttpGet(QObject *parent)
     : QObject(parent)
 {
-    connect(&http, SIGNAL(done(bool)), this, SLOT(httpDone(bool)));
+    connect(&manager, SIGNAL(finished(QNetworkReply*)), 
+            this, SLOT(downloadFinished(QNetworkReply*)));
 }
 
 bool HttpGet::getFile(const QUrl &url)
@@ -39,21 +40,33 @@ bool HttpGet::getFile(const QUrl &url)
         return false;
     }
 
-    http.setHost(url.host(), url.port(80));
-    http.get(url.path(), &file);
-    http.close();
+    QNetworkRequest request(url);
+    QNetworkReply *reply = manager.get(request);
+    connect(reply, SIGNAL(downloadProgress(qint64, qint64)),
+            this, SLOT(downloadProgress(qint64, qint64)));
+    
     return true;
 }
 
-void HttpGet::httpDone(bool error)
+void HttpGet::downloadFinished(QNetworkReply *reply)
 {
-    if (error) {
-        std::cerr << "Error: " << qPrintable(http.errorString())
+    if (reply->error() != QNetworkReply::NoError) {
+        std::cerr << "Error: " << qPrintable(reply->errorString())
                   << std::endl;
     } else {
+        file.write(reply->readAll());
         std::cerr << "File downloaded as "
                   << qPrintable(file.fileName()) << std::endl;
     }
     file.close();
+    reply->deleteLater();
     emit done();
+}
+
+void HttpGet::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
+{
+    if (bytesTotal > 0) {
+        std::cerr << "Downloaded " << bytesReceived << " of " 
+                  << bytesTotal << " bytes\r" << std::flush;
+    }
 }

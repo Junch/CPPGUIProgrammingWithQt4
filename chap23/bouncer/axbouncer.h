@@ -1,10 +1,17 @@
 #ifndef AXBOUNCER_H
 #define AXBOUNCER_H
 
-#include <QAxBindable>
 #include <QWidget>
 
+#ifdef Q_OS_WIN
+#include <QAxBindable>
+#endif
+
+#ifdef Q_OS_WIN
 class AxBouncer : public QWidget, public QAxBindable
+#else
+class AxBouncer : public QWidget
+#endif
 {
     Q_OBJECT
     Q_ENUMS(SpeedValue)
@@ -26,7 +33,9 @@ public:
     QColor color() const { return ballColor; }
     bool isRunning() const { return myTimerId != 0; }
     QSize sizeHint() const;
+#ifdef Q_OS_WIN
     QAxAggregated *createAggregate();
+#endif
 
 public slots:
     void start();

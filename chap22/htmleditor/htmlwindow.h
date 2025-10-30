@@ -2,7 +2,7 @@
 #define HTMLWINDOW_H
 
 #include <QMainWindow>
-#include <QScriptEngine>
+#include <QJSEngine>
 
 class QAction;
 class QDir;
@@ -42,7 +42,7 @@ private:
 
     QTextEdit *textEdit;
     HtmlSyntaxHighlighter *syntaxHighlighter;
-    QScriptEngine interpreter;
+    QJSEngine interpreter;
     QString curFile;
     QString fileFilters;
 

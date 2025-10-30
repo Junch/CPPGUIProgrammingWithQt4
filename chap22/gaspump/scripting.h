@@ -3,18 +3,16 @@
 
 #include <QDate>
 #include <QObject>
-#include <QScriptable>
 #include <QTime>
 
-class QScriptValue;
+class QJSValue;
 class PumpFilter;
 
 bool runScript(const QString &fileName, const QStringList &args);
 
-QScriptValue pumpFilterConstructor(QScriptContext *context,
-                                   QScriptEngine *interpreter);
+QJSValue pumpFilterConstructor(const QJSValue &value);
 
-class PumpFilterPrototype : public QObject, public QScriptable
+class PumpFilterPrototype : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QDate fromDate READ fromDate WRITE setFromDate)
@@ -31,6 +29,9 @@ class PumpFilterPrototype : public QObject, public QScriptable
 
 public:
     PumpFilterPrototype(QObject *parent = 0);
+
+    void setFilter(PumpFilter *filter) { m_filter = filter; }
+    PumpFilter *filter() const { return m_filter; }
 
     void setFromDate(const QDate &date);
     QDate fromDate() const;
@@ -58,6 +59,7 @@ public:
     QString status() const;
 
 private:
+    PumpFilter *m_filter;
     PumpFilter *wrappedFilter() const;
 };
 

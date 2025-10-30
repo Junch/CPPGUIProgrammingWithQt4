@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 #include <cmath>
 
 #include "cityview.h"

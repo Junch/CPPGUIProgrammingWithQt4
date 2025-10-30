@@ -7,9 +7,8 @@
 Spider::Spider(QObject *parent)
     : QObject(parent)
 {
-    connect(&ftp, SIGNAL(done(bool)), this, SLOT(ftpDone(bool)));
-    connect(&ftp, SIGNAL(listInfo(const QUrlInfo &)),
-            this, SLOT(ftpListInfo(const QUrlInfo &)));
+    connect(&manager, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(replyFinished(QNetworkReply*)));
 }
 
 bool Spider::getDirectory(const QUrl &url)
@@ -24,70 +23,62 @@ bool Spider::getDirectory(const QUrl &url)
         return false;
     }
 
-    ftp.connectToHost(url.host(), url.port(21));
-    ftp.login();
-
+    std::cerr << "Note: FTP directory listing is not supported in Qt5." << std::endl;
+    std::cerr << "This example has been simplified to demonstrate basic FTP download." << std::endl;
+    std::cerr << "For full FTP functionality, consider using third-party libraries." << std::endl;
+    
+    // Simplified version: just try to download the URL as a file
     QString path = url.path();
-    if (path.isEmpty())
-        path = "/";
+    if (path.isEmpty() || path.endsWith('/')) {
+        std::cerr << "Error: Please specify a file to download, not a directory" << std::endl;
+        return false;
+    }
 
-    pendingDirs.append(path);
-    processNextDirectory();
+    QString fileName = QFileInfo(path).fileName();
+    currentLocalDir = "downloads";
+    QDir(".").mkpath(currentLocalDir);
+    
+    QFile *file = new QFile(currentLocalDir + "/" + fileName);
+    if (!file->open(QIODevice::WriteOnly)) {
+        std::cerr << "Error: Cannot write file "
+                  << qPrintable(file->fileName()) << ": "
+                  << qPrintable(file->errorString()) << std::endl;
+        delete file;
+        return false;
+    }
+    
+    openedFiles.append(file);
+    QNetworkRequest request(url);
+    manager.get(request);
 
     return true;
 }
 
-void Spider::ftpDone(bool error)
+void Spider::replyFinished(QNetworkReply *reply)
 {
-    if (error) {
-        std::cerr << "Error: " << qPrintable(ftp.errorString())
-                  << std::endl;
+    if (reply->error() != QNetworkReply::NoError) {
+        std::cerr << "Error: " << qPrintable(reply->errorString()) << std::endl;
     } else {
-        std::cout << "Downloaded " << qPrintable(currentDir) << " to "
-                  << qPrintable(QDir::toNativeSeparators(
-                                QDir(currentLocalDir).canonicalPath()));
+        if (!openedFiles.isEmpty()) {
+            QFile *file = openedFiles.first();
+            file->write(reply->readAll());
+            file->close();
+            std::cout << "Downloaded to "
+                      << qPrintable(QDir::toNativeSeparators(
+                                    QFileInfo(file->fileName()).absoluteFilePath()))
+                      << std::endl;
+        }
     }
 
     qDeleteAll(openedFiles);
     openedFiles.clear();
-
-    processNextDirectory();
-}
-
-void Spider::ftpListInfo(const QUrlInfo &urlInfo)
-{
-    if (urlInfo.isFile()) {
-        if (urlInfo.isReadable()) {
-            QFile *file = new QFile(currentLocalDir + "/"
-                                    + urlInfo.name());
-
-            if (!file->open(QIODevice::WriteOnly)) {
-                std::cerr << "Warning: Cannot write file "
-                          << qPrintable(QDir::toNativeSeparators(
-                                        file->fileName()))
-                          << ": " << qPrintable(file->errorString())
-                          << std::endl;
-                return;
-            }
-
-            ftp.get(urlInfo.name(), file);
-            openedFiles.append(file);
-        }
-    } else if (urlInfo.isDir() && !urlInfo.isSymLink()) {
-        pendingDirs.append(currentDir + "/" + urlInfo.name());
-    }
+    reply->deleteLater();
+    
+    emit done();
 }
 
 void Spider::processNextDirectory()
 {
-    if (!pendingDirs.isEmpty()) {
-        currentDir = pendingDirs.takeFirst();
-        currentLocalDir = "downloads/" + currentDir;
-        QDir(".").mkpath(currentLocalDir);
-
-        ftp.cd(currentDir);
-        ftp.list();
-    } else {
-        emit done();
-    }
+    // This function is no longer used in the simplified version
+    emit done();
 }

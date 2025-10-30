@@ -1,8 +1,10 @@
 #ifndef FTPGET_H
 #define FTPGET_H
 
+#include <QObject>
 #include <QFile>
-#include <QFtp>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 
 class QUrl;
 
@@ -19,10 +21,11 @@ signals:
     void done();
 
 private slots:
-    void ftpDone(bool error);
+    void downloadFinished(QNetworkReply *reply);
+    void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
 
 private:
-    QFtp ftp;
+    QNetworkAccessManager manager;
     QFile file;
 };
 

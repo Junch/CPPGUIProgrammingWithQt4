@@ -1,4 +1,5 @@
 TEMPLATE      = app
+QT           += widgets
 HEADERS       = imagewindow.h \
                 transactionthread.h
 SOURCES       = imagewindow.cpp \

@@ -1,4 +1,5 @@
 TEMPLATE      = app
+QT           += widgets
 HEADERS       = diagramwindow.h \
                 link.h \
                 node.h \
