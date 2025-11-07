@@ -1,4 +1,4 @@
-# Findfile3 example
+﻿# Findfile3 example
 cmake_minimum_required(VERSION 3.16)
 project(findfile3)
 
@@ -19,3 +19,7 @@ add_executable(findfile3
 )
 
 target_link_libraries(findfile3 ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(findfile3)
+endif()

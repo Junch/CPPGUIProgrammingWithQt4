@@ -1,4 +1,4 @@
-# Threads example
+﻿# Threads example
 cmake_minimum_required(VERSION 3.16)
 project(threads)
 
@@ -21,3 +21,7 @@ add_executable(threads
 )
 
 target_link_libraries(threads ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(threads)
+endif()

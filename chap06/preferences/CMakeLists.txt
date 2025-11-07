@@ -1,4 +1,4 @@
-# Preferences example
+﻿# Preferences example
 cmake_minimum_required(VERSION 3.16)
 project(preferences)
 
@@ -19,3 +19,7 @@ add_executable(preferences
 )
 
 target_link_libraries(preferences ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(preferences)
+endif()

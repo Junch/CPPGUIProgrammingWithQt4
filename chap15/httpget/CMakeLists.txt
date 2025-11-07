@@ -1,4 +1,4 @@
-# Httpget example
+﻿# Httpget example
 cmake_minimum_required(VERSION 3.16)
 project(httpget)
 
@@ -19,3 +19,7 @@ add_executable(httpget
 )
 
 target_link_libraries(httpget ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(httpget)
+endif()

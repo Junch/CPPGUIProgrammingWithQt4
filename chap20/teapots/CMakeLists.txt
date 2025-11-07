@@ -1,4 +1,4 @@
-# Teapots example
+﻿# Teapots example
 cmake_minimum_required(VERSION 3.16)
 project(teapots)
 
@@ -22,3 +22,7 @@ add_executable(teapots
 )
 
 target_link_libraries(teapots ${QT_LIBS} OpenGL::GL)
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(teapots)
+endif()

@@ -1,4 +1,4 @@
-# Waitconditions example
+﻿# Waitconditions example
 cmake_minimum_required(VERSION 3.16)
 project(waitconditions)
 
@@ -17,3 +17,7 @@ add_executable(waitconditions
 )
 
 target_link_libraries(waitconditions ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(waitconditions)
+endif()

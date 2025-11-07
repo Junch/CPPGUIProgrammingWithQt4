@@ -1,4 +1,4 @@
-# Projectchooser example
+﻿# Projectchooser example
 cmake_minimum_required(VERSION 3.16)
 project(projectchooser)
 
@@ -29,3 +29,7 @@ add_executable(projectchooser
 target_include_directories(projectchooser PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(projectchooser ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(projectchooser)
+endif()

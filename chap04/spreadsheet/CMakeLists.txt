@@ -1,4 +1,4 @@
-# Spreadsheet example (Chapter 4)
+﻿# Spreadsheet example (Chapter 4)
 cmake_minimum_required(VERSION 3.16)
 project(spreadsheet_chap04)
 
@@ -34,3 +34,7 @@ add_executable(spreadsheet_chap04
 )
 
 target_link_libraries(spreadsheet_chap04 ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(spreadsheet_chap04)
+endif()

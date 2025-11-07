@@ -1,4 +1,4 @@
-# Flowchartsymbolpicker example
+﻿# Flowchartsymbolpicker example
 cmake_minimum_required(VERSION 3.16)
 project(flowchartsymbolpicker)
 
@@ -22,3 +22,7 @@ add_executable(flowchartsymbolpicker
 )
 
 target_link_libraries(flowchartsymbolpicker ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(flowchartsymbolpicker)
+endif()

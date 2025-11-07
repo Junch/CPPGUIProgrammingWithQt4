@@ -1,4 +1,4 @@
-# Mdieditor example
+﻿# Mdieditor example
 cmake_minimum_required(VERSION 3.16)
 project(mdieditor)
 
@@ -24,3 +24,7 @@ add_executable(mdieditor
 )
 
 target_link_libraries(mdieditor ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(mdieditor)
+endif()

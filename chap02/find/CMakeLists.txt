@@ -1,4 +1,4 @@
-# Find Dialog example
+﻿# Find Dialog example
 cmake_minimum_required(VERSION 3.16)
 project(find)
 
@@ -19,3 +19,7 @@ add_executable(find
 )
 
 target_link_libraries(find ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(find)
+endif()

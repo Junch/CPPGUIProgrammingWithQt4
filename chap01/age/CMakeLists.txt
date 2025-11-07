@@ -1,4 +1,4 @@
-# Age example
+﻿# Age example
 cmake_minimum_required(VERSION 3.16)
 project(age)
 
@@ -14,3 +14,7 @@ endif()
 
 add_executable(age age.cpp)
 target_link_libraries(age ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(age)
+endif()

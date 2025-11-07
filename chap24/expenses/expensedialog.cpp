@@ -53,7 +53,7 @@ ExpenseDialog::ExpenseDialog(const Expense &expense, QWidget *parent)
     createMenuOrToolBar();
 
     QGridLayout *mainLayout = new QGridLayout;
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(3);
     mainLayout->addWidget(dateLabel, 0, 0);
     mainLayout->addWidget(dateEdit, 0, 1);

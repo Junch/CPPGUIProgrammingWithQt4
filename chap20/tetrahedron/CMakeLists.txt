@@ -1,4 +1,4 @@
-# Tetrahedron example
+﻿# Tetrahedron example
 cmake_minimum_required(VERSION 3.16)
 project(tetrahedron)
 
@@ -22,3 +22,7 @@ add_executable(tetrahedron
 )
 
 target_link_libraries(tetrahedron ${QT_LIBS} OpenGL::GL)
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(tetrahedron)
+endif()

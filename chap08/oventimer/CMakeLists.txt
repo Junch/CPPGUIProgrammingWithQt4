@@ -1,4 +1,4 @@
-# Oventimer example
+﻿# Oventimer example
 cmake_minimum_required(VERSION 3.16)
 project(oventimer)
 
@@ -19,3 +19,7 @@ add_executable(oventimer
 )
 
 target_link_libraries(oventimer ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(oventimer)
+endif()

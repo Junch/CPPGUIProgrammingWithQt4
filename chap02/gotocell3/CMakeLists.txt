@@ -1,4 +1,4 @@
-# GoToCell Dialog example 3
+﻿# GoToCell Dialog example 3
 cmake_minimum_required(VERSION 3.16)
 project(gotocell3)
 
@@ -21,3 +21,7 @@ add_executable(gotocell3
 )
 
 target_link_libraries(gotocell3 ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(gotocell3)
+endif()

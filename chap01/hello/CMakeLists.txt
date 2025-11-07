@@ -14,3 +14,8 @@ endif()
 
 add_executable(hello hello.cpp)
 target_link_libraries(hello ${QT_LIBS})
+
+# Windows平台自动拷贝Qt运行库
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(hello)
+endif()

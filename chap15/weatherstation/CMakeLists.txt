@@ -1,4 +1,4 @@
-# Weatherstation example
+﻿# Weatherstation example
 cmake_minimum_required(VERSION 3.16)
 project(weatherstation)
 
@@ -19,3 +19,7 @@ add_executable(weatherstation
 )
 
 target_link_libraries(weatherstation ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(weatherstation)
+endif()

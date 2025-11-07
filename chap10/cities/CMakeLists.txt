@@ -1,4 +1,4 @@
-# Cities example
+﻿# Cities example
 cmake_minimum_required(VERSION 3.16)
 project(cities)
 
@@ -19,3 +19,7 @@ add_executable(cities
 )
 
 target_link_libraries(cities ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(cities)
+endif()

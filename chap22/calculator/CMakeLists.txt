@@ -1,4 +1,4 @@
-# Calculator example
+﻿# Calculator example
 cmake_minimum_required(VERSION 3.16)
 project(calculator)
 
@@ -19,3 +19,7 @@ add_executable(calculator
 )
 
 target_link_libraries(calculator ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(calculator)
+endif()

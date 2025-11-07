@@ -1,4 +1,6 @@
 #include <QtWidgets>
+#include <QPluginLoader>
+#include <QDir>
 
 #include "textartdialog.h"
 #include "textartinterface.h"
@@ -59,11 +61,13 @@ QDir TextArtDialog::directoryOf(const QString &subdir)
 void TextArtDialog::loadPlugins()
 {
     QDir pluginsDir = directoryOf("plugins");
-    foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
+    QStringList fileList = pluginsDir.entryList(QDir::Files);
+    for (int i = 0; i < fileList.size(); ++i) {
+        const QString &fileName = fileList.at(i);
         QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
-        if (TextArtInterface *interface =
-                    qobject_cast<TextArtInterface *>(loader.instance()))
-            interfaces.append(interface);
+        TextArtInterface *artInterface = qobject_cast<TextArtInterface *>(loader.instance());
+        if (artInterface)
+            interfaces.append(artInterface);
     }
 }
 
@@ -79,11 +83,14 @@ void TextArtDialog::populateListWidget(const QString &text)
     gradient.setColorAt(0.8, QColor("darkgreen"));
     gradient.setColorAt(1.0, QColor("lightgreen"));
 
-    foreach (TextArtInterface *interface, interfaces) {
-        foreach (QString effect, interface->effects()) {
+    for (int i = 0; i < interfaces.size(); ++i) {
+        TextArtInterface *artInterface = interfaces.at(i);
+        QStringList effectList = artInterface->effects();
+        for (int j = 0; j < effectList.size(); ++j) {
+            const QString &effect = effectList.at(j);
             QListWidgetItem *item = new QListWidgetItem(effect,
                                                         listWidget);
-            QPixmap pixmap = interface->applyEffect(effect, text, font,
+            QPixmap pixmap = artInterface->applyEffect(effect, text, font,
                                                     iconSize, pen,
                                                     gradient);
             item->setData(Qt::DecorationRole, pixmap);

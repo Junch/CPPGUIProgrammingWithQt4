@@ -1,4 +1,4 @@
-# Mailclient example
+﻿# Mailclient example
 cmake_minimum_required(VERSION 3.16)
 project(mailclient)
 
@@ -19,3 +19,7 @@ add_executable(mailclient
 )
 
 target_link_libraries(mailclient ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(mailclient)
+endif()

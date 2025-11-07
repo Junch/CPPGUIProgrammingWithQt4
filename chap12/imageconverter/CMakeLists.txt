@@ -1,4 +1,4 @@
-# Imageconverter example
+﻿# Imageconverter example
 cmake_minimum_required(VERSION 3.16)
 project(imageconverter)
 
@@ -21,3 +21,7 @@ add_executable(imageconverter
 )
 
 target_link_libraries(imageconverter ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(imageconverter)
+endif()

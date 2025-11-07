@@ -1,4 +1,4 @@
-# Plotter example
+﻿# Plotter example
 cmake_minimum_required(VERSION 3.16)
 project(plotter_appendixc)
 
@@ -22,3 +22,7 @@ add_executable(plotter_appendixc
 )
 
 target_link_libraries(plotter_appendixc ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(plotter_appendixc)
+endif()

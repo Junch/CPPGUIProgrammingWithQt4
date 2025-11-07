@@ -4,6 +4,9 @@ project(CPPGUIProgrammingWithQt4 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# 添加CMake模块路径
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
 # macOS 架构设置 (默认使用 x86_64 以匹配常见的 Qt 库)
 if(APPLE)
     # 如果没有指定架构，默认使用 x86_64
@@ -35,6 +38,9 @@ else()
     set(QT_VERSION_MAJOR 5)
 endif()
 
+# 包含Qt部署模块
+include(DeployQt)
+
 # 设置输出目录
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -63,4 +69,4 @@ add_subdirectory(chap22)
 add_subdirectory(chap23)
 # chap24 是嵌入式编程示例 (Qtopia/Qt Extended)，不包含在标准 Qt 构建中
 # add_subdirectory(chap24)
-add_subdirectory(appendixC)
+# add_subdirectory(appendixC)

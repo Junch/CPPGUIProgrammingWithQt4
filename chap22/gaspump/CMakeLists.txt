@@ -1,4 +1,4 @@
-# Gaspump example
+﻿# Gaspump example
 cmake_minimum_required(VERSION 3.16)
 project(gaspump)
 
@@ -27,3 +27,7 @@ add_executable(gaspump
 )
 
 target_link_libraries(gaspump ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(gaspump)
+endif()

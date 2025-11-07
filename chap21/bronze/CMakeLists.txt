@@ -1,4 +1,4 @@
-# Bronze example
+﻿# Bronze example
 cmake_minimum_required(VERSION 3.16)
 project(bronze_chap21)
 
@@ -24,3 +24,7 @@ add_executable(bronze_chap21
 )
 
 target_link_libraries(bronze_chap21 ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(bronze_chap21)
+endif()

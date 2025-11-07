@@ -75,7 +75,7 @@ void PreferenceDialog::createAppearancePage()
     toolbarsGroupBox->setLayout(toolbarsLayout);
 
     QVBoxLayout *pageLayout = new QVBoxLayout;
-    pageLayout->setMargin(0);
+    pageLayout->setContentsMargins(0, 0, 0, 0);
     pageLayout->addWidget(openGroupBox);
     pageLayout->addWidget(toolbarsGroupBox);
     pageLayout->addWidget(tooltipsCheckBox);
@@ -132,7 +132,7 @@ void PreferenceDialog::createWebBrowserPage()
     webButtonsGroupBox->setLayout(webButtonsLayout);
 
     QVBoxLayout *pageLayout = new QVBoxLayout;
-    pageLayout->setMargin(0);
+    pageLayout->setContentsMargins(0, 0, 0, 0);
     pageLayout->addWidget(displayGroupBox);
     pageLayout->addWidget(homeGroupBox);
     pageLayout->addWidget(webButtonsGroupBox);
@@ -177,7 +177,7 @@ void PreferenceDialog::createMailAndNewsPage()
     mailButtonsGroupBox->setLayout(mailButtonsLayout);
 
     QVBoxLayout *pageLayout = new QVBoxLayout;
-    pageLayout->setMargin(0);
+    pageLayout->setContentsMargins(0, 0, 0, 0);
     pageLayout->addWidget(generalGroupBox);
     pageLayout->addWidget(mailButtonsGroupBox);
     pageLayout->addStretch();
@@ -210,7 +210,7 @@ void PreferenceDialog::createAdvancedPage()
     featuresGroupBox->setLayout(featuresLayout);
 
     QVBoxLayout *pageLayout = new QVBoxLayout;
-    pageLayout->setMargin(0);
+    pageLayout->setContentsMargins(0, 0, 0, 0);
     pageLayout->addWidget(featuresGroupBox);
     pageLayout->addStretch();
     advancedPage->setLayout(pageLayout);

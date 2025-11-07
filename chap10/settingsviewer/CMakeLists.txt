@@ -1,4 +1,4 @@
-# Settingsviewer example
+﻿# Settingsviewer example
 cmake_minimum_required(VERSION 3.16)
 project(settingsviewer)
 
@@ -19,3 +19,7 @@ add_executable(settingsviewer
 )
 
 target_link_libraries(settingsviewer ${QT_LIBS})
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(settingsviewer)
+endif()

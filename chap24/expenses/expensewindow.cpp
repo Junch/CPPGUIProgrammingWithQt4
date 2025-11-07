@@ -32,7 +32,7 @@ ExpenseWindow::ExpenseWindow(QWidget *parent, Qt::WFlags flags)
     labelLayout->addWidget(totalAmountLabel);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->addWidget(listWidget);
     mainLayout->addLayout(labelLayout);
     centralWidget->setLayout(mainLayout);

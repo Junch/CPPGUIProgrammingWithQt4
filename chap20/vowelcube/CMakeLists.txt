@@ -1,4 +1,4 @@
-# Vowelcube example
+﻿# Vowelcube example
 cmake_minimum_required(VERSION 3.16)
 project(vowelcube)
 
@@ -22,3 +22,7 @@ add_executable(vowelcube
 )
 
 target_link_libraries(vowelcube ${QT_LIBS} OpenGL::GL)
+# Windows platform auto-copy Qt runtime libraries
+if(WIN32 AND COMMAND deploy_qt_runtime)
+    deploy_qt_runtime(vowelcube)
+endif()
