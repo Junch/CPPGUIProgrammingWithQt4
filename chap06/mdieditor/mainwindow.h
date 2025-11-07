@@ -23,7 +23,7 @@ public slots:
     void openFile(const QString &fileName);
 
 protected:
-    void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event) override;
 
 private slots:
     void open();

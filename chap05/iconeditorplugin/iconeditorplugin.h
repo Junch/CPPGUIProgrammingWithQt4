@@ -13,14 +13,14 @@ class IconEditorPlugin : public QObject,
 public:
     IconEditorPlugin(QObject *parent = 0);
 
-    QString name() const;
-    QString includeFile() const;
-    QString group() const;
-    QIcon icon() const;
-    QString toolTip() const;
-    QString whatsThis() const;
-    bool isContainer() const;
-    QWidget *createWidget(QWidget *parent);
+    QString name() const override;
+    QString includeFile() const override;
+    QString group() const override;
+    QIcon icon() const override;
+    QString toolTip() const override;
+    QString whatsThis() const override;
+    bool isContainer() const override;
+    QWidget *createWidget(QWidget *parent) override;
 };
 
 #endif

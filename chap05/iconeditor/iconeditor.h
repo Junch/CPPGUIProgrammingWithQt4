@@ -21,12 +21,12 @@ public:
     int zoomFactor() const { return zoom; }
     void setIconImage(const QImage &newImage);
     QImage iconImage() const { return image; }
-    QSize sizeHint() const;
+    QSize sizeHint() const override;
 
 protected:
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void paintEvent(QPaintEvent *event);
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void paintEvent(QPaintEvent *event) override;
 
 private:
     void setImagePixel(const QPoint &pos, bool opaque);
